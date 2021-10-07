@@ -26,5 +26,6 @@ hold on
 plot(sol_RK4(:,1), sol_RK4(:,2));
 plot(sol_Euler1(:,1), sol_Euler1(:,2));
 plot(sol_Euler2(:,1), sol_Euler2(:,2));
-legend(["RK4" "Euler1" "Euler2"]);
+scatter(0, 0, "g");
+legend(["RK4" "Euler1" "Euler2" "Mittpunkt"]);
 axis equal

@@ -19,7 +19,7 @@ D = (wR - wL)/b;
 % alla parametrar till fvel.
 fvel_func = @(t,s) fvel(t, s, b, aL, aR ,wL, wR);
 
-options = odeset('RelTol', 1e-8, 'AbsTol', 1e-8);
+options = odeset('RelTol', 1e-8, 'AbsTol', 1e-8, "Refine", 1);
 [tv, sol_ode45] = ode45(fvel_func, [0 tend], [x0 y0 theta0], options);
 
 fprintf("Antal steg: %d \n", length(tv));

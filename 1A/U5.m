@@ -27,10 +27,11 @@ yana = @(tv) y0 - (B/D)*(cos(D*tv) - 1);
 % alla parametrar till fvel.
 fvel_func = @(t,s) fvel(t, s, b, aL, aR ,wL, wR);
 
-fprintf("Antal steg: %d \n", length(tv));
 
 options = odeset('RelTol', 1e-6, 'AbsTol', 1e-8, "Refine", 4);
 [tv, sol_ode45] = ode45(fvel_func, [0 tend], [x0 y0 theta0], options);
+
+fprintf("Antal steg: %d \n", length(tv));
 
 hold on;
 
