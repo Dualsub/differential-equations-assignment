@@ -1,4 +1,4 @@
-function [h,hdot] = roadprofile(H,L,v,t);
+function [h,hdot] = roadprofile(H,L,v,t)
 % Utparametrar: höjden h(t), och dess derivata h'(t)
 % Inparametrar: Höjden på guppet H, längden på guppet L, bilens hastighet v och den aktuella tiden t
 if(t <= L/v)

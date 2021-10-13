@@ -19,7 +19,11 @@ A = [0, 0, 1, 0;
     ];
 v_0 = [0;0;0;0];
 vfunc = @(t, y) quartercar(t,y,A,k2,c2,m2,H,L,v);
-[tv, solm] = EulerF(vfunc, 5*10^-3,[0, 0.1], v_0);
-plot(tv, solm)
-legend(["$z_1$", "$z_2$", "$\dot{z_1}$", "$\dot{z_2}$"],'Interpreter','latex')
+opts = odeset('RelTol', 1e-6);
+[tv, solm] = ode45(vfunc, [0, 1], v_0, opts);
+plot(tv, solm(:,1:2))
+title("$z_1$ / $z_2$ mot tiden",'Interpreter','latex');
+legend(["$z_1$", "$z_2$"],'Interpreter','latex');
+xlabel("Tid $(s)$",'Interpreter','latex');
+ylabel("Höjd $(s)$",'Interpreter','latex');
 
