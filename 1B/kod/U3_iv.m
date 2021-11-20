@@ -1,17 +1,15 @@
 clc, clear
 
-m1 = 460;
-m2 = 60;
-k1_ref = 5500;
-k2_ref = 130000;
-k1 = k1_ref;
-k2 = 100*k2_ref;
-c1 = 300;
-c2 = 1300;
+% Givna systemparametrar.
+m1 = 460; m2 = 60;
+k1_ref = 5500; k2_ref = 130000;
+k1 = k1_ref; k2 = k2_ref;
+c1 = 300; c2 = 1300;
 v  = (60/3.6);
 H = 0.2;
 L = 1;
 
+% Systemmatrisen
 A = [0, 0, 1, 0; 
     0, 0, 0, 1; 
     -k1/m1, k1/m1, -c1/m1, c1/m1; 
@@ -30,17 +28,17 @@ end
 t_max = min(dts);
 dt = t_max * 0.1;
 
-% Beräknar lösningen
+% Initialvilkor
 v_0 = [0;0;0;0];
 
 tspan = [0, 1];
+% Anonym funktion som kan användas av Euler-metoden.
 vfunc = @(t, y) quartercar(t,y,A,k2,c2,m2,H,L,v);
-
+% 
 [tv, solm] = EulerF(vfunc, dt, tspan, v_0);
 plot(tv, solm(1:2,:));
-title_str = ["Styvare system med $\Delta t = 0.1 \cdot t_{max} = $" + num2str(dt) + "$\,s$"];
-legend(["$z_1$", "$z_2$"],'Interpreter','latex');
-title(title_str, 'Interpreter','latex');
-xlabel("Tid $(s)$",'Interpreter','latex');
-ylabel("$z_1 / z_2 \, (m)$",'Interpreter','latex');
-saveas(gcf,'plot_U3_iv','epsc');
+title_str = "Styvare system med $\Delta t = 0.1 \cdot t_{max} = $" + num2str(dt) + "$\,s$";
+legend(["$z_1$", "$z_2$"],"Interpreter","latex");
+title(title_str, "Interpreter","latex");
+xlabel("Tid $(s)$","Interpreter","latex");
+ylabel("$z_1 / z_2 \, (m)$","Interpreter","latex");

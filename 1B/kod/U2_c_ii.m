@@ -26,8 +26,8 @@ for i = 1:length(tv)-1
    dtv(i) = tv(i+1) - tv(i); 
 end
 
-plot(tv(1:end-1), dtv, "o");
-title("Steglängen av mot tiden",'Interpreter','latex');
+plot(tv(1:end-1), dtv, ".", 'MarkerSize', 10);
+title("Steglängden mot tiden");
 xlabel("Tid $(s)$",'Interpreter','latex');
 ylabel("Tidstegets storlek $(s)$",'Interpreter','latex');
 saveas(gcf,'plot_U2_ii','epsc');
