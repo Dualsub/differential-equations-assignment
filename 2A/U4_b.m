@@ -10,19 +10,20 @@ xvinner = (dx:dx:L-dx);
 xv = (0:dx:L);
 
 uv0 = sin(4*pi*xvinner)';
-dir1 = @(t) (0 .* t);
+dir1 = @(t) 0 .* t;
 dir2 = @(t)(sin(4*pi*L)*exp(-16*pi^2 .* t));
 
 [A, s] = VLE_rums_diskreting(N-1, D, L, dir1, dir2);
-
 func = @(t, uv) (D/(dx^2))*(A*uv + s(t));
 
-[tv, solminner] = EulerF(func, dt, tspan, uv0);
+tv = (tspan(1):dt:tspan(2));
 
-dir1res = zeros(1, length(tv));
-dir2res = dir2(tv);
+gfunc = @(t) (D/(dx^2))* s(t);
 
-solm = [dir1res; solminner; dir2res];
+[~, solm] = ITM((D/(dx^2))*A, gfunc, tv, uv0);
+
+solm = [dir1(tv); solm; dir2(tv)];
+%h = surf(solm);
 
 Uana = sin(4*pi .* xv)'*exp(-16*pi^2 .* tv);
 

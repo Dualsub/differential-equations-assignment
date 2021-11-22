@@ -14,6 +14,14 @@ for i=0:5
     fprintf("Tidsstegen: %d ger 2-felet: %f \n", N, norm2(U, Uana(X)'));
 end
 
+N = 1600*2^i;
+[A, f] = diskretisering(N);
+U_inner = A\f;
+U = [1; U_inner];
+X = 0:1/N:1;
+pvec(i+1) = norm2(U, Uana(X)');
+plot(X, abs(U - Uana(X)'));
+
 % Beräknar noggrannhetsordning
 pe10 = log(pvec(1) / pvec(2))/log(2);
 pe20 = log(pvec(2) / pvec(3))/log(2);
