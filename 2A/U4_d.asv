@@ -22,7 +22,7 @@ for n=0:4
     
     M = N*10; 
     dt = (tspan(2) - tspan(1))/M;
-    tv = (tspan(1):dt:tspan(2));
+    tv = (tspan(1):d);
     
     uv0 = sin(4*pi.*xvinner)';
   
@@ -39,9 +39,9 @@ for n=0:4
     diff = solm(2,:) - Uana(2,1:2^n:end);
     err = norm2(solm(:,end), Uana(:,end));
     pvec(n+1) = err; % Fyller backlänges.
-    
-    fprintf("Tidssteg: dt=%d, M=%d Rumssteg: dx=%d, N=%d ger felet: %d \n", dt, M, dx, N, err);
 end
+
+display(pvec);
 
 % Beräknar noggrannhetsordning
 pe10 = log(pvec(1) / pvec(2))/log(2);
