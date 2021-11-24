@@ -1,44 +1,45 @@
 clc, clear
 
+% Konstanter
 D = 1;
+N = 100;
 L = 1.2;
-dt = 10^-4;
 tspan = [0, 0.03];
 
-dir1 = @(t) 0.* t;
-dir2 = @(t)(sin(4*pi*L)*exp(-16*(pi^2) .* t));
-
-% Beräknar tidsvektor
-tend = 0.03;
-h = (1/(2^4)) * dt; % Först för det minsta värdet på alpha
-tv = h*(0:floor(tend/h)); % Beräknar alla tider i tidsspannet.
+% Villkor
+dir1 = @(t) (0 .* t);
+dir2 = @(t)(sin(4*pi*L)*exp(-16*pi^2 .* t));
 
 pvec = zeros(1, 5);
 for n=0:4
-    N = 100 * 2^n;
+    % Rumssteg samt vektorer.
+    N = 50 * 2^n;
     dx = L/N;
     xv = (0:dx:L);
     xvinner = (dx:dx:L-dx);
     
-    M = N*10; 
+    % Tidssteg samt vektorer.
+    M = 2*N; % Proptionel mot N.
     dt = (tspan(2) - tspan(1))/M;
     tv = (tspan(1):dt:tspan(2));
     
+    % intiall villkor.
     uv0 = sin(4*pi.*xvinner)';
-  
-    Uana = sin(4*pi .* xv)'*exp(-16*pi^2 .* tv);
     
+    % Rumsdiskretisering.
     [A, s] = VLE_rums_diskreting(N-1, D, L, dir1, dir2);
 
+    % Anonym funktion för
     gfunc = @(t) (D/(dx^2))* s(t);
 
-    tvn = tv(1:2^n:end);
-    [~, solminner] = ITM((D/(dx^2))*A, gfunc, tvn, uv0);
-    res = dir1(tvn);
-    solm = [dir1(tvn); solminner; dir2(tvn)]; 
-    diff = solm(2,:) - Uana(2,1:2^n:end);
+    % Löser med implicit metod.
+    [~, solminner] = ITM((D/(dx^2))*A, gfunc, tv, uv0);
+    solm = [dir1(tv); solminner; dir2(tv)]; 
+  
+    % Beräknar analytisk lösning och beräknar fel.
+    Uana = sin(4*pi .* xv)'*exp(-16*pi^2 .* tv);
     err = norm2(solm(:,end), Uana(:,end));
-    pvec(n+1) = err; % Fyller backlänges.
+    pvec(n+1) = err;
     
     fprintf("Tidssteg: dt=%d, M=%d Rumssteg: dx=%d, N=%d ger felet: %d \n", dt, M, dx, N, err);
 end
@@ -55,9 +56,4 @@ fprintf("p10=%f \n", pe10);
 fprintf("p20=%f \n", pe20);
 fprintf("p40=%f \n", pe40);
 fprintf("p80=%f \n", pe80);
-
-%h = surf(err);
-
-%set(h,'LineStyle','none')
-
 

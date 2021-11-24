@@ -14,7 +14,7 @@ for i=0:5
     fprintf("Tidsstegen: %d ger 2-felet: %f \n", N, norm2(U, Uana(X)'));
 end
 
-N = 1600*2^i;
+N = 1600;
 [A, f] = diskretisering(N);
 U_inner = A\f;
 U = [1; U_inner];
