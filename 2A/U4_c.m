@@ -6,7 +6,7 @@ N = 100;
 L = 1.2;
 
 % Tids/rums-steg samt vektorer.
-dt = 10^-5;
+dt = 10^-4;
 dx = L/N;
 tspan = [0, 0.03];
 tv = (tspan(1):dt:tspan(2));

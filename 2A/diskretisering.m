@@ -8,6 +8,6 @@ function [A,f] = diskretisering(N)
     
     f = zeros(N, 1);
     f(1) = -1/h^2;
-    f(end) = exp(2) - exp(-2);
+    f(end) = (2/3)*exp(2) - (4/3)*exp(-2);
 end
 

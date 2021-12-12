@@ -2,11 +2,11 @@ clc, clear
 
 % Konstanter
 D = 1;
-N = 100;
+N = 50;
 L = 1.2;
 
 % Tids/rums-steg samt vektorer.
-dt = 10^-5;
+dt = 0.0004;
 dx = L/N;
 tspan = [0, 0.03];
 xvinner = (dx:dx:L-dx);
@@ -27,13 +27,14 @@ func = @(t, uv) (D/(dx^2))*(A*uv + s(t));
 
 % Lägger till randvillkoren.
 solm = [dir1(tv); solminner; dir2(tv)];
+h = surf(solm);
 
 % Beräknar analytisk lösning och jämför.
 Uana = sin(4*pi .* xv)'*exp(-16*pi^2 .* tv);
-err = Uana - solm;
-max_err = max(max(abs(err)));
+err = abs(Uana - solm);
+max_err = max(max(err));
 fprintf("Maxfel: %d", max_err);
-h = surf(err);
+%h = surf(err);
 set(h,'LineStyle','none')
 
 

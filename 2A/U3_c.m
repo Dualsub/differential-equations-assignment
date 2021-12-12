@@ -48,8 +48,8 @@ solm = [dir1(tv); solminner; dir2(tv)];
 
 % Beräknar analytisk lösning och jämför.
 Uana = sin(4*pi .* xv)'*exp(-16*pi^2 .* tv);
-err = Uana - solm;
-max_err = max(max(abs(err)));
+err = abs(Uana - solm);
+max_err = max(max(err));
 fprintf("Maxfel: %d", max_err);
 h = surf(err);
 

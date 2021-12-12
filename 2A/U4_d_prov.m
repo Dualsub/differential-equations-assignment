@@ -2,13 +2,12 @@ clc, clear
 
 % Konstanter
 D = 1;
-N = 100;
 L = 1.2;
 tspan = [0, 0.03];
 
 % Villkor
 dir1 = @(t) (0 .* t);
-dir2 = @(t)(sin(4*pi*L)*exp(-16*pi^2 .* t));
+dir2 = @(t)(sin(8*pi*L)*exp(-64*pi^2 .* t));
 
 pvec = zeros(1, 5);
 for n=0:4
@@ -24,7 +23,7 @@ for n=0:4
     tv = (tspan(1):dt:tspan(2));
     
     % intiall villkor.
-    uv0 = sin(4*pi.*xvinner)';
+    uv0 = sin(8*pi.*xvinner)';
     
     % Rumsdiskretisering.
     [A, s] = VLE_rums_diskreting(N-1, D, L, dir1, dir2);
@@ -37,7 +36,7 @@ for n=0:4
     solm = [dir1(tv); solminner; dir2(tv)]; 
   
     % Beräknar analytisk lösning och beräknar fel.
-    Uana = sin(4*pi .* xv)'*exp(-16*pi^2 .* tv);
+    Uana = sin(8*pi .* xv)'*exp(-64*pi^2 .* tv);
     err = norm2(solm(:,end), Uana(:,end));
     pvec(n+1) = err;
     
